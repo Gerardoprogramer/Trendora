@@ -1,5 +1,5 @@
 
-export const ProductPage = () => {
+export const AdminProductPage = () => {
   return (
     <div>ProductPage</div>
   )
