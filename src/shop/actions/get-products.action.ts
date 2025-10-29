@@ -9,12 +9,13 @@ interface Options {
     sizes?: string
     maxPrice?: number;
     minPrice?: number;
+    q?: string
 }
 
 
 export const getProductsAction = async (options: Options): Promise<ProductsResponse> => {
 
-    const { limit, offset, gender, sizes, maxPrice, minPrice } = options;
+    const { limit, offset, gender, sizes, maxPrice, minPrice, q } = options;
 
     const { data } = await Api.get<ProductsResponse>('/products',
         {
@@ -24,7 +25,8 @@ export const getProductsAction = async (options: Options): Promise<ProductsRespo
                 gender,
                 sizes,
                 maxPrice,
-                minPrice
+                minPrice,
+                q
             }
         }
     );
