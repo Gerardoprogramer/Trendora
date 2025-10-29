@@ -5,19 +5,26 @@ import type { ProductsResponse } from '@/interfaces/products.response';
 interface Options {
     limit?: number | string,
     offset?: number | string
-
+    gender?: string
+    sizes?: string
+    maxPrice?: number;
+    minPrice?: number;
 }
 
 
 export const getProductsAction = async (options: Options): Promise<ProductsResponse> => {
 
-    const { limit, offset } = options;
+    const { limit, offset, gender, sizes, maxPrice, minPrice } = options;
 
     const { data } = await Api.get<ProductsResponse>('/products',
         {
             params:{
                 limit,
-                offset
+                offset,
+                gender,
+                sizes,
+                maxPrice,
+                minPrice
             }
         }
     );
