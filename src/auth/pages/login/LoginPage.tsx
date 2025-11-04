@@ -1,14 +1,18 @@
+import { useState } from 'react';
+import { toast } from 'sonner';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { CustomLogo } from '@/components/custom/CustomLogo';
 import { Link, useNavigate } from 'react-router';
-import { Login } from '@/auth/actions/login.actions';
-import { toast } from 'sonner';
-import { useState } from 'react';
+
+import { useAuthStore } from '@/auth/store/auth.store';
 
 export const LoginPage = () => {
+
+  const { login } = useAuthStore()
 
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
@@ -21,18 +25,15 @@ export const LoginPage = () => {
 
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
-    console.log({email, password})
 
-    try {
+    const isValid = await login(email, password);
 
-        const data = await Login(email, password);
-        localStorage.setItem('token', data.token)
-        navigate('/');
-      
-    } catch (error) {
-      toast.error('Correo o/y contraseñas no validos');
+    if (isValid) {
+      navigate('/');
+      return
     }
 
+    toast.error('Correo o/y contraseñas no validos');
     setIsLogin(false)
   }
 

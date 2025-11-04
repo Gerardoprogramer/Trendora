@@ -10,7 +10,6 @@ export const Login = async (email: string, password: string): Promise<AuthRespon
                 email,
                 password
             })
-        console.log(data)
         return data
     } catch (error) {
         console.log(error);
