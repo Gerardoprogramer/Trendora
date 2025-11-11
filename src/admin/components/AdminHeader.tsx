@@ -1,11 +1,23 @@
-import React from 'react';
 import { Search, Bell, MessageSquare, Settings } from 'lucide-react';
 import { useAuthStore } from '@/auth/store/auth.store';
+import { useSearchParams } from 'react-router';
 
 export const AdminHeader: React.FC = () => {
 
-  const {user} = useAuthStore();
+  const { user } = useAuthStore();
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+
+    if (!event.currentTarget.value) {
+      searchParams.delete('query')
+    } else {
+      searchParams.set('query', event.currentTarget.value);
+    }
+    setSearchParams(searchParams)
+
+  }
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4 h-18">
       <div className="flex items-center justify-between">
@@ -17,6 +29,7 @@ export const AdminHeader: React.FC = () => {
               size={20}
             />
             <input
+              onChange={handleSearch}
               type="text"
               placeholder="Search..."
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
